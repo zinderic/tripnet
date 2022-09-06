@@ -15,19 +15,24 @@ type Intel struct {
 
 func main() {
 	files := []string{"/etc/hosts", "/etc/fstab"} // TODO make discovery for all files eventually
-	hash(files)
+	fmt.Println(GetFilesWithHashes(files))
 }
 
-func hash(files []string) {
+func GetFilesWithHashes(files []string) []Intel {
+	var FileHashes []Intel
 	hasher := sha256.New()
 	for _, f := range files {
-		fmt.Println("Reading file " + f)
 		s, err := os.ReadFile(string(f))
 		hasher.Write(s)
 		if err != nil {
 			log.Fatal(err)
 		}
-		os.Stdout.WriteString(hex.EncodeToString(hasher.Sum(nil)))
+		hash := hex.EncodeToString(hasher.Sum(nil))
+		FileHashes = append(FileHashes, Intel{
+			FileName: f,
+			FileHash: hash,
+		})
 		hasher.Reset()
 	}
+	return FileHashes
 }
