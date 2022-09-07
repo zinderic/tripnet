@@ -1,9 +1,8 @@
-package main
+package agent
 
 import (
 	"crypto/sha256"
 	"encoding/hex"
-	"fmt"
 	"log"
 	"os"
 )
@@ -11,11 +10,6 @@ import (
 type Intel struct {
 	FileName string `json:"file_name"`
 	FileHash string `json:"file_hash"`
-}
-
-func main() {
-	files := []string{"/etc/hosts", "/etc/fstab"} // TODO make discovery for all files eventually
-	fmt.Println(GetFilesWithHashes(files))
 }
 
 func GetFilesWithHashes(files []string) []Intel {
