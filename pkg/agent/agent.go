@@ -3,8 +3,10 @@ package agent
 import (
 	"crypto/sha256"
 	"encoding/hex"
+	"fmt"
 	"log"
 	"os"
+	"path/filepath"
 )
 
 type Intel struct {
@@ -29,4 +31,26 @@ func GetFilesWithHashes(files []string) []Intel {
 		hasher.Reset()
 	}
 	return FileHashes
+}
+
+func GetFilesFromDirectory(directory string) []string {
+
+	var allFiles []string
+
+	err := filepath.Walk(directory, func(path string, info os.FileInfo, err error) error {
+		if err != nil {
+			fmt.Println(err)
+			return err
+		}
+		if !info.IsDir() {
+			allFiles = append(allFiles, path)
+		}
+		return nil
+	})
+
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	return allFiles
 }
