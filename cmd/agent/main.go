@@ -19,7 +19,7 @@ func main() {
 	files := agent.GetFilesFromDirectory(*directory)
 
 	collectedIntel := agent.GetFilesWithHashes(files)
-	// TODO do something with those instead of just returning
+	// TODO send those to the server using gRPC
 	for _, i := range collectedIntel {
 		fmt.Printf("%s: %s\n", i.FileName, i.FileHash)
 	}
