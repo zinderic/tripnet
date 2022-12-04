@@ -24,6 +24,7 @@ func (s *TripServer) FileHash(
 		Status: "received hash " + req.Msg.FileHash,
 	})
 	res.Header().Set("Tripserv-Version", "v1")
+	// TODO persist to storage the received file/hash
 	return res, nil
 }
 

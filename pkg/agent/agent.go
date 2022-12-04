@@ -10,7 +10,7 @@ import (
 )
 
 type Intel struct {
-	FileName string `json:"file_name"`
+	FilePath string `json:"file_name"`
 	FileHash string `json:"file_hash"`
 }
 
@@ -25,7 +25,7 @@ func GetFilesWithHashes(files []string) []Intel {
 		}
 		hash := hex.EncodeToString(hasher.Sum(nil))
 		FileHashes = append(FileHashes, Intel{
-			FileName: f,
+			FilePath: f,
 			FileHash: hash,
 		})
 		hasher.Reset()
