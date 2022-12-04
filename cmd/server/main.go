@@ -7,6 +7,7 @@ import (
 	"net/http"
 	tripservv1 "tripnet/gen/tripserv/v1"
 	"tripnet/gen/tripserv/v1/tripservv1connect"
+	"tripnet/pkg/db"
 
 	"github.com/bufbuild/connect-go"
 	"golang.org/x/net/http2"
@@ -24,7 +25,18 @@ func (s *TripServer) FileHash(
 		Status: "received hash " + req.Msg.FileHash,
 	})
 	res.Header().Set("Tripserv-Version", "v1")
-	// TODO persist to storage the received file/hash
+	filePath := req.Msg.GetFilePath()
+	fileHash := req.Msg.GetFileHash()
+
+	// TODO implement alerting:
+	// - check if filepath/filehash exist
+	// - compare the hash if it exist and alert if it's wrong
+
+	// Persist to storage
+	err := db.SaveFileHash(filePath, fileHash)
+	if err != nil {
+		return nil, err
+	}
 	return res, nil
 }
 
