@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	tripservv1 "tripnet/gen/pkg/tripserv/v1"
-	"tripnet/gen/pkg/tripserv/v1/tripservv1connect"
+	tripservv1 "tripnet/gen/tripserv/v1"
+	"tripnet/gen/tripserv/v1/tripservv1connect"
 
 	"github.com/bufbuild/connect-go"
 	"golang.org/x/net/http2"

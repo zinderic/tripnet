@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package tripserv.v1;
 
-option go_package = "tripnet/gen/pkg/tripserv/v1;tripservv1";
+option go_package = "tripnet/gen/tripserv/v1;tripservv1";
 
 message FileHashRequest {
   string file_path = 1;
