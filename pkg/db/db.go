@@ -47,7 +47,11 @@ func SaveFileHash(filePath string, fileHash string) error {
 
 	_, err = stmt.Exec(filePath, fileHash)
 	if err != nil {
-		return err
+		if err.Error() == "UNIQUE constraint failed: files.filepath, files.hash" {
+			// swallow error
+		} else {
+			return err
+		}
 	}
 
 	err = tx.Commit()
