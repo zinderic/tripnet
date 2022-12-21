@@ -19,7 +19,7 @@ func init() {
 			log.Fatal(err)
 		}
 		sqlStmt := `
-	create table files (id INTEGER PRIMARY KEY AUTOINCREMENT, filepath text, hash text);
+	create table files (id INTEGER PRIMARY KEY AUTOINCREMENT, filepath text, hash text, CONSTRAINT filehash UNIQUE (filepath, hash));
 	`
 		_, err = DB.Exec(sqlStmt)
 		if err != nil {
