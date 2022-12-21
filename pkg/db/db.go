@@ -19,7 +19,7 @@ func init() {
 			log.Fatal(err)
 		}
 		sqlStmt := `
-	create table files (id INTEGER PRIMARY KEY AUTOINCREMENT, filepath text, hash text);
+	create table files (id INTEGER PRIMARY KEY AUTOINCREMENT, filepath text, hash text, CONSTRAINT filehash UNIQUE (filepath, hash));
 	`
 		_, err = DB.Exec(sqlStmt)
 		if err != nil {
@@ -47,7 +47,11 @@ func SaveFileHash(filePath string, fileHash string) error {
 
 	_, err = stmt.Exec(filePath, fileHash)
 	if err != nil {
-		return err
+		if err.Error() == "UNIQUE constraint failed: files.filepath, files.hash" {
+			// swallow error
+		} else {
+			return err
+		}
 	}
 
 	err = tx.Commit()
